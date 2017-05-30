@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.auok.cbps.ssm.dao.impl.RoleOperatorDaoImpl" >
+  
+  <sql id="table_name">ams_role_operator</sql>
+  
+  <resultMap id="BaseResultMap" type="top.auok.cbps.ssm.model.RoleOperator" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="role_id" property="roleId" jdbcType="BIGINT" />
+    <result column="opr_id" property="oprId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, role_id, opr_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ams_role_operator
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ams_role_operator
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="top.auok.cbps.ssm.model.RoleOperator" >
+    insert into ams_role_operator (id, role_id, opr_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{oprId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="top.auok.cbps.ssm.model.RoleOperator" >
+    insert into ams_role_operator
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="oprId != null" >
+        opr_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="oprId != null" >
+        #{oprId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="top.auok.cbps.ssm.model.RoleOperator" >
+    update ams_role_operator
+    <set >
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="oprId != null" >
+        opr_id = #{oprId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.auok.cbps.ssm.model.RoleOperator" >
+    update ams_role_operator
+    set role_id = #{roleId,jdbcType=BIGINT},
+      opr_id = #{oprId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="listByOperatorId" parameterType="Long" resultMap="BaseResultMap">
+		select * from
+		<include refid="table_name" />
+		where opr_id = #{operatorId}
+  </select>
+</mapper>

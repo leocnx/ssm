@@ -1,0 +1,26 @@
+<script src="../js/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">  
+    $(document).ready(function(){  
+        /* var saveDataAry=[];  
+        var data1={"userName":"test","address":"gz"};  
+        var data2={"userName":"ququ","address":"gr"};  
+        saveDataAry.push(data1);  
+        saveDataAry.push(data2); */ 
+        
+        var sendData = {"authName":"权限管理-权限-添加", "authCode":"ams:authorization:add", "authStatus":"ACTIVE"};
+        alert(sendData);
+        $.ajax({ 
+            type:"POST", 
+            url:"../ams/auth/add", 
+            dataType:"json",      
+            contentType:"application/json",               
+            data:JSON.stringify(sendData), 
+            success:function(data){ 
+                alert(data);                          
+            } 
+         }); 
+    });  
+</script>
+<body>
+Test Rest.
+</body>

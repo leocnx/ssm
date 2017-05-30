@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.auok.cbps.ssm.dao.impl.AuthorizationDaoImpl" >
+	
+  <sql id="table_name">ams_authorization</sql>
+  
+  <resultMap id="BaseResultMap" type="top.auok.cbps.ssm.model.Authorization" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="auth_name" property="authName" jdbcType="VARCHAR" />
+    <result column="auth_code" property="authCode" jdbcType="VARCHAR" />
+    <result column="auth_status" property="authStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, auth_name, auth_code, auth_status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ams_authorization
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ams_authorization
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="top.auok.cbps.ssm.model.Authorization" >
+    insert into ams_authorization (id, auth_name, auth_code, 
+      auth_status)
+    values (#{id,jdbcType=BIGINT}, #{authName,jdbcType=VARCHAR}, #{authCode,jdbcType=VARCHAR}, 
+      #{authStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="top.auok.cbps.ssm.model.Authorization" >
+    insert into ams_authorization
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="authName != null" >
+        auth_name,
+      </if>
+      <if test="authCode != null" >
+        auth_code,
+      </if>
+      <if test="authStatus != null" >
+        auth_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="authName != null" >
+        #{authName,jdbcType=VARCHAR},
+      </if>
+      <if test="authCode != null" >
+        #{authCode,jdbcType=VARCHAR},
+      </if>
+      <if test="authStatus != null" >
+        #{authStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="top.auok.cbps.ssm.model.Authorization" >
+    update ams_authorization
+    <set >
+      <if test="authName != null" >
+        auth_name = #{authName,jdbcType=VARCHAR},
+      </if>
+      <if test="authCode != null" >
+        auth_code = #{authCode,jdbcType=VARCHAR},
+      </if>
+      <if test="authStatus != null" >
+        auth_status = #{authStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.auok.cbps.ssm.model.Authorization" >
+    update ams_authorization
+    set auth_name = #{authName,jdbcType=VARCHAR},
+      auth_code = #{authCode,jdbcType=VARCHAR},
+      auth_status = #{authStatus,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="listByColumn" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select *
+		from
+		<include refid="table_name" />
+		<where>
+			<include refid="condition_sql" />
+		</where>
+  </select>
+	
+  <sql id="condition_sql">
+		<if test="authorizationName != null and authorizationName != ''"> and auth_name = #{authorizationName,jdbcType=VARCHAR}</if>
+  </sql>
+	
+  <select id="getByIds" resultMap="BaseResultMap">
+		select
+		*
+		from
+		<include refid="table_name" />
+		where ID in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">#{item}</foreach>
+  </select>
+</mapper>

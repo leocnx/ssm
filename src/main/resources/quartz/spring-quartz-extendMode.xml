@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop" 
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	<bean id="jobFactory" class="top.auok.cbps.ssm.schedule.quartz.extend.CbpsQuartzJobFactory"></bean>
+
+	<!-- 配置调度程序quartz ，其中配置JobDetail有两种方式 -->
+	<!-- 方式一：使用JobDetailBean，任务类必须实现Job接口 -->
+	<bean id="extendJobDetail"
+		class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<!-- <property name="name" value="batchSettle"></property> -->
+		<property name="jobClass" value="top.auok.cbps.ssm.schedule.quartz.extend.CbpsExtendJob"></property>
+		<!-- <property name="jobDataAsMap"> <map> <entry key=""> <value></value> 
+			</entry> </map> </property> -->
+		<property name="durability" value="true" /> <!-- Jobs added with no trigger must be durable -->
+	</bean>
+
+	<!-- ======================== 调度触发器 ======================== -->
+	<bean id="cronTriggerFactoryBean"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="extendJobDetail"></property>
+		<property name="cronExpression" value="0/5 * * * * ?"></property>
+	</bean>
+
+	<!-- ======================== 调度工厂 ======================== -->
+	<bean id="SpringJobSchedulerFactoryBean"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="cronTriggerFactoryBean" />
+			</list>
+		</property>
+		<property name="jobFactory" ref="jobFactory"></property>
+	</bean>
+</beans>

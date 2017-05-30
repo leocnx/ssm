@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.auok.cbps.ssm.dao.impl.ResourceDaoImpl" >
+	
+  <sql id="table_name">ams_resource</sql>
+  	
+  <resultMap id="BaseResultMap" type="top.auok.cbps.ssm.model.Resource" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="is_leaf" property="isLeaf" jdbcType="CHAR" />
+    <result column="res_name" property="resName" jdbcType="VARCHAR" />
+    <result column="res_code" property="resCode" jdbcType="VARCHAR" />
+    <result column="res_status" property="resStatus" jdbcType="VARCHAR" />
+    <result column="target_name" property="targetName" jdbcType="VARCHAR" />
+    <result column="rest_url" property="restUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, parent_id, level, is_leaf, res_name, res_code, res_status, target_name, rest_url
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ams_resource
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ams_resource
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="top.auok.cbps.ssm.model.Resource" >
+    insert into ams_resource (id, parent_id, level, 
+      is_leaf, res_name, res_code, 
+      res_status, target_name, rest_url
+      )
+    values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{level,jdbcType=INTEGER}, 
+      #{isLeaf,jdbcType=CHAR}, #{resName,jdbcType=VARCHAR}, #{resCode,jdbcType=VARCHAR}, 
+      #{resStatus,jdbcType=VARCHAR}, #{targetName,jdbcType=VARCHAR}, #{restUrl,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="top.auok.cbps.ssm.model.Resource" >
+    insert into ams_resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="isLeaf != null" >
+        is_leaf,
+      </if>
+      <if test="resName != null" >
+        res_name,
+      </if>
+      <if test="resCode != null" >
+        res_code,
+      </if>
+      <if test="resStatus != null" >
+        res_status,
+      </if>
+      <if test="targetName != null" >
+        target_name,
+      </if>
+      <if test="restUrl != null" >
+        rest_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="isLeaf != null" >
+        #{isLeaf,jdbcType=CHAR},
+      </if>
+      <if test="resName != null" >
+        #{resName,jdbcType=VARCHAR},
+      </if>
+      <if test="resCode != null" >
+        #{resCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resStatus != null" >
+        #{resStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="targetName != null" >
+        #{targetName,jdbcType=VARCHAR},
+      </if>
+      <if test="restUrl != null" >
+        #{restUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="top.auok.cbps.ssm.model.Resource" >
+    update ams_resource
+    <set >
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="isLeaf != null" >
+        is_leaf = #{isLeaf,jdbcType=CHAR},
+      </if>
+      <if test="resName != null" >
+        res_name = #{resName,jdbcType=VARCHAR},
+      </if>
+      <if test="resCode != null" >
+        res_code = #{resCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resStatus != null" >
+        res_status = #{resStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="targetName != null" >
+        target_name = #{targetName,jdbcType=VARCHAR},
+      </if>
+      <if test="restUrl != null" >
+        rest_url = #{restUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.auok.cbps.ssm.model.Resource" >
+    update ams_resource
+    set parent_id = #{parentId,jdbcType=BIGINT},
+      level = #{level,jdbcType=INTEGER},
+      is_leaf = #{isLeaf,jdbcType=CHAR},
+      res_name = #{resName,jdbcType=VARCHAR},
+      res_code = #{resCode,jdbcType=VARCHAR},
+      res_status = #{resStatus,jdbcType=VARCHAR},
+      target_name = #{targetName,jdbcType=VARCHAR},
+      rest_url = #{restUrl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
